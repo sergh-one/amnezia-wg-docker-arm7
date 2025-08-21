@@ -1,10 +1,14 @@
 name: build
 
+permissions:
+  contents: read
+  packages: write
+
 on:
   push:
     branches:
       - master
-    tags:
+    # tags:
   pull_request:
 
 jobs:
@@ -30,14 +34,23 @@ jobs:
         run: |
           docker buildx build \
               --platform linux/arm/v7 .
-
+              
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          
       - name: build amnezia-wg-docker image for ghcr.io
         if: ${{ github.ref == 'refs/heads/master' }}
-        env:
-          GITHUB_PACKAGE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          USERNAME: ${{ github.actor }}
+        # env:
+        #   GITHUB_PACKAGE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        #   USERNAME: ${{ github.actor }}
+        
+        # better to use official login-action@v3 
+        # echo ${GITHUB_PACKAGE_TOKEN} | docker login ghcr.io -u ${USERNAME} --password-stdin
         run: |
-          echo ${GITHUB_PACKAGE_TOKEN} | docker login ghcr.io -u ${USERNAME} --password-stdin
           docker buildx build --push \
               --platform linux/arm/v7 \
-              -t ghcr.io/yury-sannikov/amnezia-wg-docker:latest .
+              -t ghcr.io/sergh-one/amnezia-wg-docker:latest .
