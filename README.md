@@ -47,7 +47,7 @@ PrivateKey = gG...Y3s=
 Address = 10.0.0.1/32
 ListenPort = 51820
 # Jc лучше брать в интервале [3,10], Jmin = 100, Jmax = 1000,
-Jc = 3
+Jc = 4
 Jmin = 100
 Jmax = 1000
 # Parameters below will not work with the existing WireGuarg implementation.
