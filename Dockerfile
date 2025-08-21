@@ -1,5 +1,5 @@
 ARG GOLANG_VERSION=1.24
-ARG ALPINE_VERSION=3.22.1
+ARG ALPINE_VERSION=3.22
 FROM golang:${GOLANG_VERSION}-alpine${ALPINE_VERSION} AS builder
 
 RUN apk update && apk add --no-cache git make bash build-base linux-headers
