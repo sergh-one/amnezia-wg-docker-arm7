@@ -18,7 +18,7 @@ RUN cd amneziawg-go && \
 FROM alpine:${ALPINE_VERSION}
 RUN apk update && apk add --no-cache bash openrc iptables iptables-legacy iproute2
 # In final stage, copy the built binary from the builder
-COPY --from=builder /go/amneziawg-go/amneziawg-go /usr/bin/amneziawg-go
+COPY --from=builder /usr/bin/amneziawg-go /usr/bin/amneziawg-go
 # COPY amnezia-wg/amneziawg-go /usr/bin/amneziawg-go
 COPY --from=builder /go/amneziawg-tools/src/wg /usr/bin/awg
 COPY --from=builder /go/amneziawg-tools/src/wg-quick/linux.bash /usr/bin/awg-quick
