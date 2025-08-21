@@ -1,4 +1,4 @@
-ARG GOLANG_VERSION=1.21
+ARG GOLANG_VERSION=1.24.4
 ARG ALPINE_VERSION=3.19
 FROM golang:${GOLANG_VERSION}-alpine${ALPINE_VERSION} AS builder
 
@@ -9,7 +9,11 @@ RUN cd amneziawg-tools/src && \
     make
 # In builder stage, after cloning amneziawg-tools
 RUN cd ../../
-RUN cd amneziawg-go && go build -o amneziawg-go
+# RUN cd amneziawg-go && go build -o amneziawg-go
+RUN cd amneziawg-go && \
+    go mod download && \
+    go mod verify && \
+    go build -ldflags '-linkmode external -extldflags "-fno-PIC -static"' -v -o /usr/bin
 
 FROM alpine:${ALPINE_VERSION}
 RUN apk update && apk add --no-cache bash openrc iptables iptables-legacy iproute2
