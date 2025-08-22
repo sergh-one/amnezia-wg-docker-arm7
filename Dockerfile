@@ -30,10 +30,6 @@ RUN \
         -e 's/^#\?rc_env_allow=.*/rc_env_allow="\*"/' \
         -e 's/^#\?rc_sys=.*/rc_sys="docker"/' \
         /etc/rc.conf && \
-    sed -i \
-        -e 's/VSERVER/DOCKER/' \
-        -e 's/checkpath -d "$RC_SVCDIR"/mkdir "$RC_SVCDIR"/' \
-        /lib/rc/sh/init.sh && \
     rm \
         /etc/init.d/hwdrivers \
         /etc/init.d/machine-id
