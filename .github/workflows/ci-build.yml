@@ -52,5 +52,5 @@ jobs:
         # echo ${GITHUB_PACKAGE_TOKEN} | docker login ghcr.io -u ${USERNAME} --password-stdin
         run: |
           docker buildx build --push \
-              --platform linux/arm/v7 \
-              -t ghcr.io/sergh-one/amnezia-wg-docker:latest .
+              --platform linux/arm/v7,linux/amd64,linux/amd64/v2,linux/amd64/v3 \
+              -t ghcr.io/sergh-one/amneziawg-go-multiplatform:latest .
